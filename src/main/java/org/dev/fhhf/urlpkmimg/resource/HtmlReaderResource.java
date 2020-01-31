@@ -27,7 +27,7 @@ public class HtmlReaderResource {
 			return "El Pokémon " + pkmIdName + " NO existe";
 		}
 		
-		return url;
+		return url.substring(2);
 	}
 	
 	@RequestMapping("")
