@@ -19,7 +19,7 @@ public class HtmlReaderImpl implements HtmlReaderService{
 	@Override
 	public String readUrl(String pkmIdName) throws IOException{
 		
-		System.out.println(pkmIdName.length() <= 3);
+		//System.out.println(pkmIdName.length() <= 3);
 		if(pkmIdName.length() <= 3) {
 			return "Provide pkm # and name e.g. /pkm/006Charizard";
 		}
