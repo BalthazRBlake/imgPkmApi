@@ -4,19 +4,22 @@ import java.io.IOException;
 
 import org.dev.fhhf.urlpkmimg.service.HtmlReaderService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.*;
+import org.dev.fhhf.urlpkmimg.model.ResponseObject;
+import org.springframework.http.ResponseEntity;
 
 @RestController
-@RequestMapping("/pkm")
+@CrossOrigin(origins = "*", methods= {RequestMethod.GET})
+@RequestMapping(value = "/pkm", produces = MediaType.APPLICATION_JSON_VALUE)
 public class HtmlReaderResource {
 	
 	@Autowired
 	private HtmlReaderService htmlReaderService;
-	
-	@RequestMapping("/{pkmIdName}")
-	public String getImgUrl(@PathVariable("pkmIdName") String pkmIdName) {
+
+	@GetMapping("/{pkmIdName}")
+	public ResponseObject getImgUrl(@PathVariable("pkmIdName") String pkmIdName) {
 		
 		String url;
 		
@@ -24,14 +27,16 @@ public class HtmlReaderResource {
 			url = htmlReaderService.readUrl(pkmIdName);
 		}catch(IOException ex) {
 			ex.printStackTrace();
-			return "El Pokémon " + pkmIdName + " NO existe";
+			ResponseObject responseObject = new ResponseObject("El Pokémon " + pkmIdName + " NO existe");
+			return responseObject;
 		}
-		
-		return url.substring(2);
+
+		ResponseObject responseObject = new ResponseObject(url.substring(2));
+		return responseObject;
 	}
 	
 	@RequestMapping("")
-	public String infoFormat() {
-		return "Provide pkm # and name e.g. /pkm/006Charizard";
+	public ResponseObject infoFormat() {
+		return new ResponseObject("Provide pkm # and name e.g. /pkm/006Charizard");
 	}
 }

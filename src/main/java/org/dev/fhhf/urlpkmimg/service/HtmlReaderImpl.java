@@ -23,13 +23,13 @@ public class HtmlReaderImpl implements HtmlReaderService{
 		if(pkmIdName.length() <= 3) {
 			return "Provide pkm # and name e.g. /pkm/006Charizard";
 		}
-		
 		htmlReader.setUrl("https://bulbapedia.bulbagarden.net/wiki/File:" + pkmIdName + ".png");
 		
 		Document doc;
 		//try {
-			
-			doc = Jsoup.connect(htmlReader.getUrl()).get(); 
+			doc = Jsoup.connect(htmlReader.getUrl())
+					.userAgent("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36")
+					.get();
 			//title = doc.title();
 			//System.out.println(title);
 			//System.out.println(doc);
